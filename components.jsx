@@ -280,7 +280,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
       <section className="about-hero" data-screen-label="About / Hero">
         <p className="eyebrow">Our story</p>
         <h1 className="about-hero__h1">
-          Built by someone who's had the wrong therapist - <em>discourage people .</em>
+          Built by someone who's seen the process <em>discourage people .</em>
         </h1>
         <p className="about-hero__lead">Start Saying More was founded after watching too many friends and family members give up on therapy after one bad match.
 
