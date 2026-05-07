@@ -3,7 +3,7 @@
 // All sections stacked, one submit at the bottom.
 // ============================================================
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1XhOzogGEBCSWZZrE8DQ0s_GuZYOieF3UgncoVVZeHHctXTn8YWxMah8H8OXcdWwZzw/exec";
+const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
 
 const { useState: useFormState } = React;
 
@@ -145,9 +145,9 @@ function FormPage({ onNavigate }) {
     }
     setSubmitting(true);
     try {
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(MAKE_WEBHOOK_URL, {
         method: "POST",
-        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           timestamp:         new Date().toLocaleString("en-US"),
           firstName:         data.firstName,
@@ -171,8 +171,13 @@ function FormPage({ onNavigate }) {
           wantsCall:         data.callRequested
         })
       });
+      const json = await res.json();
+      if (json.redirect) {
+        window.location.href = json.redirect;
+        return;
+      }
     } catch (e) {
-      // no-cors responses throw on network failure only
+      // on error fall through to on-site success screen
     } finally {
       setSubmitting(false);
     }
@@ -379,7 +384,7 @@ function FormPage({ onNavigate }) {
         {/* Submit */}
         <div className="form-nav form-nav--single">
           <button type="submit" className="btn btn--primary btn--lg" disabled={submitting}>
-            {submitting ? "Submitting…" : "Submit request"} <Icon name="arrow" size={16} />
+            {submitting ? "Taking you to payment…" : "Submit & pay $5"} <Icon name="arrow" size={16} />
           </button>
           {Object.keys(errors).length > 0 &&
             <p className="form-nav__hint">Some fields above need attention.</p>
