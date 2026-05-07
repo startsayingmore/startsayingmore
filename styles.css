@@ -45,7 +45,8 @@ body { background: var(--bg-page); }
   color: white;
   box-shadow: 0 4px 14px rgba(111,63,142,.18);
 }
-.btn--primary:hover { background: var(--ssm-eminence-deep); box-shadow: var(--shadow-brand); transform: translateY(-1px); }
+.btn--primary:hover { background: var(--ssm-eminence-deep); color: white; box-shadow: var(--shadow-brand); transform: translateY(-1px); }
+.btn--primary:hover svg { stroke: white; }
 .btn--primary:active { transform: scale(0.98); }
 
 .btn--secondary {
