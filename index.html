@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Start Saying More — Bridging the gap between you & a therapist</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="image-slot.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "heroVariant": "split",
+      "accent": "#E0904F",
+      "displayFont": "serif"
+    }/*EDITMODE-END*/;
+
+    const ACCENT_SOFT = {
+      "#E0904F": "#EEA86E",
+      "#B5912A": "#E6D895",
+      "#4FA89A": "#C5EBE2",
+    };
+
+    const MATCH_FORM_URL = "https://pci.jotform.com/form/261238707072052";
+
+    function App() {
+      const [route, setRoute] = useState("home");
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      // apply theme tokens from tweaks
+      useEffect(() => {
+        const r = document.documentElement;
+        r.style.setProperty("--accent", tweaks.accent);
+        r.style.setProperty("--accent-soft", ACCENT_SOFT[tweaks.accent] || tweaks.accent);
+        r.setAttribute("data-display-font", tweaks.displayFont);
+      }, [tweaks.accent, tweaks.displayFont]);
+
+      // scroll-to-top on route change
+      useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [route]);
+
+      const navigate = (id) => setRoute(id);
+
+      return (
+        <>
+          <Header active={route} onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>
+          {route === "home"  && <HomePage  heroVariant={tweaks.heroVariant} onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>}
+          {route === "about" && <AboutPage onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>}
+          {route === "match" && <MatchPage ctaUrl={MATCH_FORM_URL}/>}
+          <Footer onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>
+
+          <TweaksPanel title="Tweaks">
+            <TweakSection label="Hero" />
+            <TweakRadio
+              label="Layout (home)"
+              value={tweaks.heroVariant}
+              onChange={(v) => setTweak("heroVariant", v)}
+              options={[
+                { value: "split", label: "Split" },
+                { value: "bleed", label: "Bleed" },
+                { value: "type",  label: "Type-led" },
+              ]}
+            />
+            <TweakSection label="Accent" />
+            <TweakColor
+              label="Brand accent"
+              value={tweaks.accent}
+              onChange={(v) => setTweak("accent", v)}
+              options={["#E0904F", "#B5912A", "#4FA89A"]}
+            />
+            <TweakSection label="Display font" />
+            <TweakRadio
+              label="Family"
+              value={tweaks.displayFont}
+              onChange={(v) => setTweak("displayFont", v)}
+              options={[
+                { value: "serif", label: "Serif" },
+                { value: "sans",  label: "Sans" },
+              ]}
+            />
+            <TweakSection label="Pages" />
+            <TweakButton label="Home"  onClick={() => navigate("home")} />
+            <TweakButton label="About" onClick={() => navigate("about")} />
+            <TweakButton label="Match" onClick={() => navigate("match")} />
+          </TweaksPanel>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
