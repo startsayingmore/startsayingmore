@@ -355,7 +355,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
       <section className="founder" data-screen-label="About / Founder" style={{ fontFamily: "Poppins" }}>
         <div className="founder__photo">
           <img src="assets/founder-lamide.jpg" alt="Olamide 'Lamide' Afolabi, Founder of Start Saying More"
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 22%", transform: "scale(1.45)", transformOrigin: "center 22%" }} />
+            style={{ position: "absolute", width: "128.7%", height: "auto", left: "56.5%", top: "50.4%", transform: "translate(-50%, -50%)" }} />
         </div>
         <div>
           <p className="eyebrow" style={{ textTransform: "none", fontFamily: "Poppins" }}>FROM THE FOUNDER</p>
