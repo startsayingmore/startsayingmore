@@ -31,33 +31,53 @@ function Icon({ name, size = 18, stroke = "currentColor", strokeWidth = 1.75 }) 
 // Header
 // ============================================================
 function Header({ active, onNavigate, ctaUrl }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const links = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "match", label: "Get matched" }];
+    { id: "home",  label: "Home" },
+    { id: "about", label: "About" },
+    { id: "match", label: "Get matched" },
+  ];
+
+  const go = (id) => { setMenuOpen(false); onNavigate(id); };
 
   return (
     <header className="site-header" data-screen-label="Header">
       <div className="site-header__inner">
-        <a className="site-header__brand" onClick={(e) => {e.preventDefault();onNavigate("home");}} href="#">
-          <img src="assets/logos/primary-logo-standard.png" alt="Start Saying More" data-comment-anchor="e75dad288e-img-43-11" />
+        <a className="site-header__brand" onClick={(e) => { e.preventDefault(); go("home"); }} href="#">
+          <img src="assets/logos/primary-logo-standard.png" alt="Start Saying More" />
         </a>
         <nav className="site-header__nav">
           {links.map((l) =>
-          <a key={l.id} href="#"
-          onClick={(e) => {e.preventDefault();onNavigate(l.id);}}
-          className={active === l.id ? "active" : ""}>
+            <a key={l.id} href="#"
+              onClick={(e) => { e.preventDefault(); go(l.id); }}
+              className={active === l.id ? "active" : ""}>
               {l.label}
             </a>
           )}
         </nav>
-        <button className="btn btn--primary btn--sm" onClick={() => onNavigate("match")}>
-          Find your match
-          <Icon name="arrow" size={16} />
+        <button className="btn btn--primary btn--sm site-header__cta-desktop" onClick={() => go("match")}>
+          Find your match <Icon name="arrow" size={16} />
+        </button>
+        <button className="site-header__burger" aria-label="Open menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <span /><span /><span />
         </button>
       </div>
-    </header>);
-
+      {menuOpen && (
+        <div className="site-header__mobile-menu">
+          {links.map((l) =>
+            <a key={l.id} href="#"
+              onClick={(e) => { e.preventDefault(); go(l.id); }}
+              className={active === l.id ? "active" : ""}>
+              {l.label}
+            </a>
+          )}
+          <button className="btn btn--primary" onClick={() => go("match")}>
+            Find your match <Icon name="arrow" size={16} />
+          </button>
+        </div>
+      )}
+    </header>
+  );
 }
 
 // ============================================================
