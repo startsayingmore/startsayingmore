@@ -219,7 +219,7 @@ function FormPage({ onNavigate }) {
             A few questions, then we get to work.
           </h1>
           <p className="lead">
-            About 5 minutes. Your responses go to Olamide and the matching team — nowhere else.
+            About 5 minutes. Your responses go to the matching team — nowhere else.
           </p>
         </div>
 

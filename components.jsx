@@ -359,7 +359,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
         </div>
         <div>
           <p className="eyebrow" style={{ textTransform: "none", fontFamily: "Poppins" }}>FROM THE FOUNDER</p>
-          <p className="founder__quote" style={{ fontFamily: "Poppins" }}>I built the thing I wished I'd had at 22 — a way to skip the bad fits and start with one that actually feels safe.
+          <p className="founder__quote" style={{ fontFamily: "Poppins" }}>I built the thing I wished I'd had at 22 — a way to skip the bad fits and start with a therapist that actually feels safe.
 
           </p>
           <div className="founder__byline">
