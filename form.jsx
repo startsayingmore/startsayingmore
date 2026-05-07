@@ -3,6 +3,8 @@
 // All sections stacked, one submit at the bottom.
 // ============================================================
 
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1XhOzogGEBCSWZZrE8DQ0s_GuZYOieF3UgncoVVZeHHctXTn8YWxMah8H8OXcdWwZzw/exec";
+
 const { useState: useFormState } = React;
 
 const US_STATES = [
@@ -127,10 +129,11 @@ function FormPage({ onNavigate }) {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (ev) => {
+  const [submitting, setSubmitting] = useFormState(false);
+
+  const handleSubmit = async (ev) => {
     ev && ev.preventDefault && ev.preventDefault();
     if (!validate()) {
-      // jump to first invalid field
       setTimeout(() => {
         const first = document.querySelector(".ff__err");
         if (first) {
@@ -140,7 +143,39 @@ function FormPage({ onNavigate }) {
       }, 50);
       return;
     }
-    console.log("[SSM Match Form] Submission:", data);
+    setSubmitting(true);
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          timestamp:         new Date().toLocaleString("en-US"),
+          firstName:         data.firstName,
+          lastName:          data.lastName,
+          email:             data.email,
+          state:             data.state,
+          zip:               data.zip,
+          hasInsurance:      data.insurance,
+          insuranceProvider: data.insuranceProvider,
+          therapistRace:     data.raceEthnicity,
+          therapistGender:   data.gender,
+          therapistFaith:    data.faith,
+          faithOther:        data.faithOther,
+          sessionFormat:     data.sessionFormat,
+          areasOfConcern:    data.concerns.join(", "),
+          areasOther:        data.concernsOther,
+          therapyBefore:     data.pastTherapy,
+          workedWell:        data.pastWorked,
+          didntWork:         data.pastDidnt,
+          additionalInfo:    data.notes,
+          wantsCall:         data.callRequested
+        })
+      });
+    } catch (e) {
+      // no-cors responses throw on network failure only
+    } finally {
+      setSubmitting(false);
+    }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -343,8 +378,8 @@ function FormPage({ onNavigate }) {
 
         {/* Submit */}
         <div className="form-nav form-nav--single">
-          <button type="submit" className="btn btn--primary btn--lg">
-            Submit request <Icon name="arrow" size={16} />
+          <button type="submit" className="btn btn--primary btn--lg" disabled={submitting}>
+            {submitting ? "Submitting…" : "Submit request"} <Icon name="arrow" size={16} />
           </button>
           {Object.keys(errors).length > 0 &&
             <p className="form-nav__hint">Some fields above need attention.</p>
