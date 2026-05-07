@@ -359,7 +359,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
 // ============================================================
 // MATCH page
 // ============================================================
-function MatchPage({ ctaUrl }) {
+function MatchPage({ ctaUrl, onNavigate }) {
   const [openFaq, setOpenFaq] = useState(0);
   const faqs = [
   { q: "How long does the intake form take?",
@@ -390,8 +390,7 @@ function MatchPage({ ctaUrl }) {
             <span><strong>~5 minutes</strong> · 1–2 day turnaround · Only $5</span>
           </div>
           <div className="hero__ctas">
-            <a className="btn btn--primary btn--lg" href="#match-form"
-              onClick={(e) => { e.preventDefault(); document.getElementById("match-form")?.scrollIntoView({ behavior: "smooth" }); }}>
+            <a className="btn btn--primary btn--lg" href={ctaUrl} target="_blank" rel="noopener">
               Start the form <Icon name="arrow" size={16} />
             </a>
             <a className="btn btn--ghost btn--lg" href="#expect"
@@ -459,7 +458,21 @@ function MatchPage({ ctaUrl }) {
         </div>
       </section>
 
-      <MatchForm />
+      <section className="match-cta" data-screen-label="Match / CTA card">
+        <div className="match-cta__card">
+          <p className="eyebrow">Ready when you are</p>
+          <h2 style={{ fontFamily: "Poppins" }}>Start saying more about <em style={{ fontFamily: "Poppins" }}>what you're going through</em>.</h2>
+          <p>The form is short. The match is real. The next step is yours.</p>
+          <a className="btn btn--accent btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+            Open the matching form <Icon name="arrow" size={16} />
+          </a>
+          <div className="match-cta__meta">
+            <span className="match-cta__meta-item"><Icon name="clock" size={14} /> ~5 min</span>
+            <span className="match-cta__meta-item"><Icon name="lock" size={14} /> Confidential</span>
+            <span className="match-cta__meta-item"><Icon name="sparkle" size={14} /> Only $5</span>
+          </div>
+        </div>
+      </section>
 
       <section className="faq" data-screen-label="Match / FAQ">
         <div className="faq__head">
