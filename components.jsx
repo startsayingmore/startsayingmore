@@ -150,6 +150,9 @@ function HomeHero({ variant, onMatch, onAbout }) {
         <span><Icon name="lock" size={14} /> Confidential</span>
         <span><Icon name="heart" size={14} /> Built for you</span>
       </p>
+      <p style={{ marginTop: 8, fontSize: 13, color: "var(--ssm-eminence)", opacity: 0.75 }}>
+        First 50 matches free — use code <strong>SSM50</strong> at checkout.
+      </p>
     </div>;
 
 
@@ -492,6 +495,9 @@ function MatchPage({ ctaUrl, onNavigate }) {
             <span className="match-cta__meta-item"><Icon name="lock" size={14} /> Confidential</span>
             <span className="match-cta__meta-item"><Icon name="sparkle" size={14} /> Only $5</span>
           </div>
+          <p style={{ marginTop: 12, fontSize: 13, color: "var(--ssm-eminence)", opacity: 0.8 }}>
+            First 50 matches free — use code <strong>SSM50</strong> at checkout.
+          </p>
         </div>
       </section>
 
