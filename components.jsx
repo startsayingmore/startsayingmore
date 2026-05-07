@@ -51,10 +51,10 @@ function Header({ active, onNavigate, ctaUrl }) {
             </a>
           )}
         </nav>
-        <a className="btn btn--primary btn--sm" href={ctaUrl} target="_blank" rel="noopener">
+        <button className="btn btn--primary btn--sm" onClick={() => onNavigate("match")}>
           Find your match
           <Icon name="arrow" size={16} />
-        </a>
+        </button>
       </div>
     </header>);
 
@@ -71,7 +71,7 @@ function Footer({ onNavigate, ctaUrl }) {
         <div className="site-footer__brand">
           <img src="assets/logos/secondary-logo-purple.png" alt="Start Saying More" data-comment-anchor="a86185949f-img-72-11" />
           <p className="site-footer__tag" style={{ fontFamily: "Poppins" }}></p>
-          <a className="site-footer__cta" href={ctaUrl} target="_blank" rel="noopener">
+          <a className="site-footer__cta" href="#" onClick={(e) => {e.preventDefault();onNavigate("match");}}>
             Get matched today <Icon name="arrow" size={14} stroke="currentColor" />
           </a>
         </div>
@@ -109,7 +109,7 @@ function Footer({ onNavigate, ctaUrl }) {
 // ============================================================
 // HOME — hero variants
 // ============================================================
-function HomeHero({ variant, ctaUrl, onAbout }) {
+function HomeHero({ variant, onMatch, onAbout }) {
   const Copy =
   <div className="hero__copy">
       <p className="eyebrow">BRIDGING THE GAP, BECAUSE</p>
@@ -120,9 +120,9 @@ function HomeHero({ variant, ctaUrl, onAbout }) {
         Start Saying More connects Black and minority people to therapists who get them — through plain-spoken intake and matching that finally accounts for who you are.
       </p>
       <div className="hero__ctas">
-        <a className="btn btn--primary btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+        <button className="btn btn--primary btn--lg" onClick={onMatch}>
           Find your match <Icon name="arrow" size={16} />
-        </a>
+        </button>
         <button className="btn btn--secondary btn--lg" onClick={onAbout}>Read our story</button>
       </div>
       <p className="hero__fine">
@@ -156,9 +156,9 @@ function HomeHero({ variant, ctaUrl, onAbout }) {
           </p>
           <div className="hero__ctas">
             <button className="btn btn--secondary btn--lg" onClick={onAbout}>Read our story</button>
-            <a className="btn btn--primary btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+            <button className="btn btn--primary btn--lg" onClick={onMatch}>
               Find your match <Icon name="arrow" size={16} />
-            </a>
+            </button>
           </div>
         </div>
       </section>);
@@ -234,7 +234,7 @@ function MissionBlock({ onAbout }) {
 // ============================================================
 // HOME — bottom CTA
 // ============================================================
-function CtaStrip({ ctaUrl }) {
+function CtaStrip({ onMatch }) {
   return (
     <section className="cta-strip" data-screen-label="Home / CTA strip">
       <div className="cta-strip__pattern" data-comment-anchor="87df51c90d-div-240-7"></div>
@@ -244,9 +244,9 @@ function CtaStrip({ ctaUrl }) {
           <p>The form takes about 5 minutes. We'll come back with a therapist who actually fits.</p>
         </div>
         <div className="cta-strip__actions">
-          <a className="btn btn--accent btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+          <button className="btn btn--accent btn--lg" onClick={onMatch}>
             Find your match <Icon name="arrow" size={16} />
-          </a>
+          </button>
           <span style={{ fontSize: 13, color: "var(--fg-muted)", letterSpacing: "0.04em" }}>
 
           </span>
@@ -260,12 +260,13 @@ function CtaStrip({ ctaUrl }) {
 // HOME page
 // ============================================================
 function HomePage({ heroVariant, onNavigate, ctaUrl }) {
+  const onMatch = () => onNavigate("match");
   return (
     <main data-screen-label="01 Home">
-      <HomeHero variant={heroVariant} ctaUrl={ctaUrl} onAbout={() => onNavigate("about")} />
+      <HomeHero variant={heroVariant} onMatch={onMatch} onAbout={() => onNavigate("about")} />
       <StatsStrip />
       <MissionBlock onAbout={() => onNavigate("about")} />
-      <CtaStrip ctaUrl={ctaUrl} />
+      <CtaStrip onMatch={onMatch} />
     </main>);
 
 }
@@ -389,10 +390,14 @@ function MatchPage({ ctaUrl }) {
             <span><strong>~5 minutes</strong> · 1–2 day turnaround · Only $5</span>
           </div>
           <div className="hero__ctas">
-            <a className="btn btn--primary btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+            <a className="btn btn--primary btn--lg" href="#match-form"
+              onClick={(e) => { e.preventDefault(); document.getElementById("match-form")?.scrollIntoView({ behavior: "smooth" }); }}>
               Start the form <Icon name="arrow" size={16} />
             </a>
-            <a className="btn btn--ghost btn--lg" href="#expect">See what to expect ↓</a>
+            <a className="btn btn--ghost btn--lg" href="#expect"
+              onClick={(e) => { e.preventDefault(); document.getElementById("expect")?.scrollIntoView({ behavior: "smooth" }); }}>
+              See what to expect ↓
+            </a>
           </div>
         </div>
         <div className="match-hero__photo">
@@ -454,21 +459,7 @@ function MatchPage({ ctaUrl }) {
         </div>
       </section>
 
-      <section className="match-cta" data-screen-label="Match / CTA card">
-        <div className="match-cta__card">
-          <p className="eyebrow">Ready when you are</p>
-          <h2 style={{ fontFamily: "Poppins" }}>Start saying more about <em style={{ fontFamily: "Poppins" }}>what you're going through</em>.</h2>
-          <p>The form is short. The match is real. The next step is yours.</p>
-          <a className="btn btn--accent btn--lg" href={ctaUrl} target="_blank" rel="noopener">
-            Open the matching form <Icon name="arrow" size={16} />
-          </a>
-          <div className="match-cta__meta">
-            <span className="match-cta__meta-item"><Icon name="clock" size={14} /> ~5 min</span>
-            <span className="match-cta__meta-item"><Icon name="lock" size={14} /> Confidential</span>
-            <span className="match-cta__meta-item"><Icon name="sparkle" size={14} /> Only $5</span>
-          </div>
-        </div>
-      </section>
+      <MatchForm />
 
       <section className="faq" data-screen-label="Match / FAQ">
         <div className="faq__head">
