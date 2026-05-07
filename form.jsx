@@ -189,10 +189,9 @@ function FormPage({ onNavigate }) {
           </div>
           <div className="form-success__copy">
             <p className="eyebrow">Got it</p>
-            <h1>Thanks, {data.firstName || "friend"}.</h1>
+            <h1 style={{ fontFamily: "Poppins", fontWeight: 800, textTransform: "none" }}>Thanks, {data.firstName || "friend"}.</h1>
             <p className="lead">
-              Your responses are with us. Olamide will review them personally and email
-              your matches to <strong>{data.email}</strong> within 1–2 business days.
+              Your responses are with us. They will be reviewed and your matches will be sent to your email within 1–2 business days.
             </p>
             <p className="form-success__meta">
               Watch your inbox (and spam) for a note from <em>hello@startsayingmore.com</em>.
