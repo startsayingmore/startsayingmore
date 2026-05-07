@@ -194,7 +194,7 @@ function FormPage({ onNavigate }) {
               Your responses are with us. They will be reviewed and your matches will be sent to your email within 1–2 business days.
             </p>
             <p className="form-success__meta">
-              Watch your inbox (and spam) for a note from <em>hello@startsayingmore.com</em>.
+              Watch your inbox (and spam) for a note from <em>info@startsayingmore.com</em>.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button className="btn btn--primary btn--lg" onClick={() => onNavigate("home")}>
