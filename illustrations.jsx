@@ -135,21 +135,26 @@ function IlloHomeHeroSplit() {
 function IlloHomeMission() {
   return (
     <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" style={{ display: "block" }}>
-      {/* Three circles in a row — succinct, aligned */}
-      <circle cx={120} cy={250} r={56} fill={ILLO_COLORS.purple} data-comment-anchor="f80dcca78f-rect-139-7" />
-      <circle cx={230} cy={250} r={56} fill={ILLO_COLORS.ink} />
-      <circle cx={340} cy={250} r={56} fill={ILLO_COLORS.lavender} stroke={ILLO_COLORS.ink} strokeWidth={2} />
-      {/* connecting line below */}
-      <line x1={80} y1={340} x2={380} y2={340} stroke={ILLO_COLORS.ink} strokeWidth={2.5} strokeLinecap="round" />
-      {/* sparkles */}
-      <g stroke={ILLO_COLORS.champagne} strokeWidth={2.5} strokeLinecap="round">
-        <line x1={60} y1={120} x2={60} y2={140} />
-        <line x1={50} y1={130} x2={70} y2={130} />
+      {/* Soft organic petal/pebble forms overlapping at center —
+          individual people meeting in shared space */}
+      <g>
+        {/* large lavender pebble, tilted */}
+        <ellipse cx={150} cy={260} rx={130} ry={170}
+          fill={ILLO_COLORS.lavender} transform="rotate(-22 150 260)" />
+        {/* champagne pebble overlapping right */}
+        <ellipse cx={270} cy={230} rx={110} ry={150}
+          fill={ILLO_COLORS.champagne} transform="rotate(18 270 230)" opacity="0.92" />
+        {/* deep purple pebble at the intersection — the meeting point */}
+        <ellipse cx={210} cy={290} rx={70} ry={95}
+          fill={ILLO_COLORS.purple} transform="rotate(-4 210 290)" />
       </g>
-      <g stroke={ILLO_COLORS.champagne} strokeWidth={2.5} strokeLinecap="round">
-        <line x1={350} y1={110} x2={350} y2={128} />
-        <line x1={341} y1={119} x2={359} y2={119} />
-      </g>
+      {/* hand-drawn loop tying them together */}
+      <path d="M 80 380 C 140 420, 260 420, 320 380"
+        fill="none" stroke={ILLO_COLORS.ink} strokeWidth={3} strokeLinecap="round" />
+      {/* small accent dots */}
+      <circle cx={70} cy={130} r={6} fill={ILLO_COLORS.ink} />
+      <circle cx={340} cy={150} r={5} fill={ILLO_COLORS.purple} />
+      <circle cx={350} cy={400} r={4} fill={ILLO_COLORS.champagne} />
     </svg>);
 
 }
@@ -163,26 +168,28 @@ function IlloAboutProblem() {
   return (
     <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" style={{ display: "block" }}>
       <rect width="400" height="500" fill={ILLO_COLORS.lavender} />
-      {/* large bubble pointing AWAY (right, off-canvas) */}
-      <Bubble cx={140} cy={180} rx={120} ry={100} fill={ILLO_COLORS.purple}
-      tailX={240} tailY={240} tailDx={40} tailDy={30} />
-      {/* a small bubble below, facing opposite direction */}
-      <Bubble cx={290} cy={360} rx={70} ry={58} fill={ILLO_COLORS.champagne}
-      tailX={232} tailY={388} tailDx={-22} tailDy={26} />
-      {/* a closed/flat lip line — shut */}
-      <g stroke={ILLO_COLORS.ink} strokeWidth={3} strokeLinecap="round" fill="none">
-        <line x1={70} y1={400} x2={170} y2={400} />
+      {/* A shape that should be whole, fractured down the middle —
+          two halves that don't quite meet. Misalignment as form. */}
+      <g>
+        {/* left half — purple, anchored top-left */}
+        <path d="M 60 90 L 188 90 L 168 410 L 60 410 Z"
+          fill={ILLO_COLORS.purple} />
+        {/* right half — champagne, OFFSET down and right */}
+        <path d="M 212 130 L 340 130 L 340 450 L 232 450 Z"
+          fill={ILLO_COLORS.champagne} />
+        {/* the gap — a thin ink line where the seam should have been */}
+        <line x1={200} y1={70} x2={200} y2={460}
+          stroke={ILLO_COLORS.ink} strokeWidth={2}
+          strokeDasharray="4 8" strokeLinecap="round" />
       </g>
-      {/* broken arrow — two halves, gap between */}
-      <g stroke={ILLO_COLORS.ink} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <line x1={250} y1={120} x2={300} y2={120} />
-        <line x1={325} y1={120} x2={355} y2={120} />
-        <polyline points="345,108 355,120 345,132" />
-      </g>
-      {/* x mark */}
-      <g stroke={ILLO_COLORS.ink} strokeWidth={2.5} strokeLinecap="round">
-        <line x1={50} y1={80} x2={70} y2={100} />
-        <line x1={70} y1={80} x2={50} y2={100} />
+      {/* small mismatched markers on each side — circle vs triangle */}
+      <circle cx={120} cy={250} r={14} fill={ILLO_COLORS.ink} />
+      <polygon points="276,236 296,266 256,266"
+        fill={ILLO_COLORS.ink} />
+      {/* tiny corner glyph — questioning */}
+      <g stroke={ILLO_COLORS.ink} strokeWidth={2.5} strokeLinecap="round" fill="none">
+        <path d="M 350 70 q 8 -10 16 0 q 0 8 -8 12 l 0 6" />
+        <circle cx={358} cy={98} r={1.5} fill={ILLO_COLORS.ink} stroke="none" />
       </g>
     </svg>);
 
@@ -228,26 +235,41 @@ function IlloAboutFounder() {
 function IlloMatchHero() {
   return (
     <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" style={{ display: "block" }}>
-      <rect width="400" height="500" fill={ILLO_COLORS.lavender} />
-      {/* three bubbles, ascending */}
-      <Bubble cx={110} cy={360} rx={75} ry={62} fill={ILLO_COLORS.champagne}
-      tailX={70} tailY={410} tailDx={-18} tailDy={28} />
-      <Bubble cx={210} cy={250} rx={90} ry={75} fill={ILLO_COLORS.purple}
-      tailX={170} tailY={315} tailDx={-22} tailDy={34} />
-      <Bubble cx={310} cy={140} rx={75} ry={62} fill={ILLO_COLORS.ink}
-      tailX={278} tailY={195} tailDx={-18} tailDy={28} />
-      {/* check inside middle bubble (the "right" one) */}
-      <polyline points="180,250 205,272 245,228"
-      fill="none" stroke={ILLO_COLORS.champagne} strokeWidth={5}
-      strokeLinecap="round" strokeLinejoin="round" />
-      {/* connecting dotted path */}
-      <g stroke={ILLO_COLORS.ink} strokeWidth={2.5} strokeLinecap="round" strokeDasharray="2 8" fill="none">
-        <path d={`M 110 360 Q 160 305 210 250 Q 260 195 310 140`} />
+      {/* Three steps along a gentle path — 1, 2, 3 → done.
+          Reads as: easy, linear, finished. */}
+      {/* the path itself — single confident curve */}
+      <path d="M 70 380 C 140 380, 160 250, 230 250 S 320 120, 350 120"
+        fill="none" stroke={ILLO_COLORS.ink} strokeWidth={3}
+        strokeLinecap="round" strokeDasharray="1 10" />
+
+      {/* Step 1 — champagne dot */}
+      <g>
+        <circle cx={70} cy={380} r={34} fill={ILLO_COLORS.champagne} />
+        <text x={70} y={388} textAnchor="middle"
+          fontFamily="Poppins, system-ui" fontSize={22} fontWeight={700}
+          fill={ILLO_COLORS.ink}>1</text>
       </g>
-      {/* sparkle near the top */}
+
+      {/* Step 2 — purple dot */}
+      <g>
+        <circle cx={210} cy={260} r={42} fill={ILLO_COLORS.purple} />
+        <text x={210} y={269} textAnchor="middle"
+          fontFamily="Poppins, system-ui" fontSize={26} fontWeight={700}
+          fill={ILLO_COLORS.champagne}>2</text>
+      </g>
+
+      {/* Step 3 — ink dot with check (done) */}
+      <g>
+        <circle cx={340} cy={130} r={48} fill={ILLO_COLORS.ink} />
+        <polyline points="316,132 334,150 364,116"
+          fill="none" stroke={ILLO_COLORS.champagne} strokeWidth={6}
+          strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+
+      {/* small sparkle at the destination */}
       <g stroke={ILLO_COLORS.purple} strokeWidth={2.5} strokeLinecap="round">
-        <line x1={350} y1={70} x2={350} y2={92} />
-        <line x1={339} y1={81} x2={361} y2={81} />
+        <line x1={300} y1={60} x2={300} y2={80} />
+        <line x1={290} y1={70} x2={310} y2={70} />
       </g>
     </svg>);
 

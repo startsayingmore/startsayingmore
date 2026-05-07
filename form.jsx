@@ -191,7 +191,8 @@ function FormPage({ onNavigate }) {
             <p className="eyebrow">Got it</p>
             <h1 style={{ fontFamily: "Poppins", fontWeight: 800, textTransform: "none" }}>Thanks, {data.firstName || "friend"}.</h1>
             <p className="lead">
-              Your responses are with us. They will be reviewed and your matches will be sent to your email within 1–2 business days.
+              Your responses are with us. We will review them and email your matches to{" "}
+              <strong>{data.email}</strong> within 1–2 business days.
             </p>
             <p className="form-success__meta">
               Watch your inbox (and spam) for a note from <em>info@startsayingmore.com</em>.

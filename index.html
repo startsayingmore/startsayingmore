@@ -33,8 +33,14 @@
 
     const MATCH_FORM_URL = "https://pci.jotform.com/form/261238707072052";
 
+    const VALID_ROUTES = ["home", "about", "match", "form"];
+    const routeFromHash = () => {
+      const h = (window.location.hash || "").replace(/^#\/?/, "");
+      return VALID_ROUTES.includes(h) ? h : "home";
+    };
+
     function App() {
-      const [route, setRoute] = useState("home");
+      const [route, setRoute] = useState(routeFromHash);
       const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
       // apply theme tokens from tweaks
@@ -45,10 +51,24 @@
         r.setAttribute("data-display-font", tweaks.displayFont);
       }, [tweaks.accent, tweaks.displayFont]);
 
+      // sync hash → state (back/forward, manual edits)
+      useEffect(() => {
+        const onHash = () => setRoute(routeFromHash());
+        window.addEventListener("hashchange", onHash);
+        return () => window.removeEventListener("hashchange", onHash);
+      }, []);
+
       // scroll-to-top on route change
       useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [route]);
 
-      const navigate = (id) => setRoute(id);
+      const navigate = (id) => {
+        if (!VALID_ROUTES.includes(id)) id = "home";
+        setRoute(id);
+        const target = "#/" + id;
+        if (window.location.hash !== target) {
+          window.history.pushState(null, "", target);
+        }
+      };
 
       return (
         <>
