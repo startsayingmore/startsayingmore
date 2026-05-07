@@ -4,6 +4,7 @@
 // ============================================================
 
 const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
+const STRIPE_PAYMENT_URL = "https://buy.stripe.com/fZu4gA4t04Eh2DR4jz1Jm02";
 
 const { useState: useFormState } = React;
 
@@ -144,45 +145,35 @@ function FormPage({ onNavigate }) {
       return;
     }
     setSubmitting(true);
-    try {
-      const res = await fetch(MAKE_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          timestamp:         new Date().toLocaleString("en-US"),
-          firstName:         data.firstName,
-          lastName:          data.lastName,
-          email:             data.email,
-          state:             data.state,
-          zip:               data.zip,
-          hasInsurance:      data.insurance,
-          insuranceProvider: data.insuranceProvider,
-          therapistRace:     data.raceEthnicity,
-          therapistGender:   data.gender,
-          therapistFaith:    data.faith,
-          faithOther:        data.faithOther,
-          sessionFormat:     data.sessionFormat,
-          areasOfConcern:    data.concerns.join(", "),
-          areasOther:        data.concernsOther,
-          therapyBefore:     data.pastTherapy,
-          workedWell:        data.pastWorked,
-          didntWork:         data.pastDidnt,
-          additionalInfo:    data.notes,
-          wantsCall:         data.callRequested
-        })
-      });
-      const json = await res.json();
-      if (json.redirect) {
-        window.location.href = json.redirect;
-        return;
-      }
-    } catch (e) {
-      // on error fall through to on-site success screen
-    } finally {
-      setSubmitting(false);
-    }
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const payload = JSON.stringify({
+      timestamp:         new Date().toLocaleString("en-US"),
+      firstName:         data.firstName,
+      lastName:          data.lastName,
+      email:             data.email,
+      state:             data.state,
+      zip:               data.zip,
+      hasInsurance:      data.insurance,
+      insuranceProvider: data.insuranceProvider,
+      therapistRace:     data.raceEthnicity,
+      therapistGender:   data.gender,
+      therapistFaith:    data.faith,
+      faithOther:        data.faithOther,
+      sessionFormat:     data.sessionFormat,
+      areasOfConcern:    data.concerns.join(", "),
+      areasOther:        data.concernsOther,
+      therapyBefore:     data.pastTherapy,
+      workedWell:        data.pastWorked,
+      didntWork:         data.pastDidnt,
+      additionalInfo:    data.notes,
+      wantsCall:         data.callRequested
+    });
+
+    // Fire to Make.com in background — no-cors avoids CORS preflight
+    fetch(MAKE_WEBHOOK_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
+
+    // Redirect to Stripe with email pre-filled
+    window.location.href = STRIPE_PAYMENT_URL + "?prefilled_email=" + encodeURIComponent(data.email);
   };
 
   if (submitted) {
