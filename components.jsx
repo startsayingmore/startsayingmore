@@ -71,7 +71,7 @@ function Footer({ onNavigate, ctaUrl }) {
         <div className="site-footer__brand">
           <img src="assets/logos/secondary-logo-purple.png" alt="Start Saying More" data-comment-anchor="a86185949f-img-72-11" />
           <p className="site-footer__tag" style={{ fontFamily: "Poppins" }}></p>
-          <a className="site-footer__cta" href="#" onClick={(e) => {e.preventDefault();onNavigate("match");}}>
+          <a className="site-footer__cta" href="#" onClick={(e) => {e.preventDefault();onNavigate("form");}}>
             Get matched today <Icon name="arrow" size={14} stroke="currentColor" />
           </a>
         </div>
@@ -352,7 +352,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
         </div>
       </section>
 
-      <CtaStrip ctaUrl={ctaUrl} />
+      <CtaStrip onMatch={() => onNavigate("match")} />
     </main>);
 }
 
@@ -390,7 +390,7 @@ function MatchPage({ ctaUrl, onNavigate }) {
             <span><strong>~5 minutes</strong> · 1–2 day turnaround · Only $5</span>
           </div>
           <div className="hero__ctas">
-            <a className="btn btn--primary btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+            <a className="btn btn--primary btn--lg" href="#" onClick={(e) => {e.preventDefault(); onNavigate && onNavigate("form");}}>
               Start the form <Icon name="arrow" size={16} />
             </a>
             <a className="btn btn--ghost btn--lg" href="#expect"
@@ -463,7 +463,7 @@ function MatchPage({ ctaUrl, onNavigate }) {
           <p className="eyebrow">Ready when you are</p>
           <h2 style={{ fontFamily: "Poppins" }}>Start saying more about <em style={{ fontFamily: "Poppins" }}>what you're going through</em>.</h2>
           <p>The form is short. The match is real. The next step is yours.</p>
-          <a className="btn btn--accent btn--lg" href={ctaUrl} target="_blank" rel="noopener">
+          <a className="btn btn--accent btn--lg" href="#" onClick={(e) => {e.preventDefault(); onNavigate && onNavigate("form");}}>
             Open the matching form <Icon name="arrow" size={16} />
           </a>
           <div className="match-cta__meta">

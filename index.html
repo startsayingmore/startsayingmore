@@ -14,6 +14,7 @@
   <div id="root"></div>
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="illustrations.jsx"></script>
+  <script type="text/babel" src="form.jsx"></script>
   <script type="text/babel" src="components.jsx"></script>
   <script type="text/babel">
     const { useState, useEffect } = React;
@@ -54,7 +55,8 @@
           <Header active={route} onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>
           {route === "home"  && <HomePage  heroVariant={tweaks.heroVariant} onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>}
           {route === "about" && <AboutPage onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>}
-          {route === "match" && <MatchPage ctaUrl={MATCH_FORM_URL}/>}
+          {route === "match" && <MatchPage ctaUrl={MATCH_FORM_URL} onNavigate={navigate}/>}
+          {route === "form"  && <FormPage onNavigate={navigate}/>}
           <Footer onNavigate={navigate} ctaUrl={MATCH_FORM_URL}/>
 
           <TweaksPanel title="Tweaks">
@@ -90,6 +92,7 @@
             <TweakButton label="Home"  onClick={() => navigate("home")} />
             <TweakButton label="About" onClick={() => navigate("about")} />
             <TweakButton label="Match" onClick={() => navigate("match")} />
+            <TweakButton label="Form"  onClick={() => navigate("form")} />
           </TweaksPanel>
         </>
       );
