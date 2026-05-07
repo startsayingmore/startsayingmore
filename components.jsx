@@ -495,7 +495,7 @@ function MatchPage({ ctaUrl, onNavigate }) {
             <span className="match-cta__meta-item"><Icon name="lock" size={14} /> Confidential</span>
             <span className="match-cta__meta-item"><Icon name="sparkle" size={14} /> Only $5</span>
           </div>
-          <p style={{ marginTop: 12, fontSize: 13, color: "var(--ssm-eminence)", opacity: 0.8 }}>
+          <p style={{ marginTop: 12, fontSize: 13, color: "white", opacity: 0.85 }}>
             First 50 matches free — use code <strong>SSM50</strong> at checkout.
           </p>
         </div>
