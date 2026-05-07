@@ -137,7 +137,7 @@ function HomeHero({ variant, ctaUrl, onAbout }) {
     return (
       <section className="hero hero--bleed" data-screen-label="Home / Hero (full-bleed)">
         <div className="hero__photo">
-          <image-slot id="home-hero-bleed" placeholder="Drop a warm, candid photo of someone in conversation here" shape="rect"></image-slot>
+          <BrandIllo name="home-hero-bleed" />
         </div>
         {Copy}
       </section>);
@@ -169,7 +169,7 @@ function HomeHero({ variant, ctaUrl, onAbout }) {
     <section className="hero hero--split" data-screen-label="Home / Hero (split)">
       {Copy}
       <div className="hero__photo">
-        <image-slot id="home-hero-split" placeholder="Drop a warm, candid hero photo here" shape="rounded" radius="24"></image-slot>
+        <BrandIllo name="home-hero-split" />
       </div>
     </section>);
 
@@ -223,7 +223,7 @@ function MissionBlock({ onAbout }) {
           </button>
         </div>
         <div className="mission__photo">
-          <image-slot id="home-mission" placeholder="Drop a candid portrait here (e.g. founder or community)" shape="rounded" radius="24"></image-slot>
+          <BrandIllo name="home-mission" />
           <span className="mission__photo-cap">Founded 2020</span>
         </div>
       </div>
@@ -279,7 +279,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
       <section className="about-hero" data-screen-label="About / Hero">
         <p className="eyebrow">Our story</p>
         <h1 className="about-hero__h1">
-          Built by someone who's had the wrong therapist - <em>discourage people .</em>.
+          Built by someone who's had the wrong therapist - <em>discourage people .</em>
         </h1>
         <p className="about-hero__lead">Start Saying More was founded after watching too many friends and family members give up on therapy after one bad match.
 
@@ -301,7 +301,7 @@ function AboutPage({ onNavigate, ctaUrl }) {
           </p>
         </div>
         <div className="about-section__media">
-          <image-slot id="about-problem" placeholder="Drop a candid editorial photo here" shape="rounded" radius="24"></image-slot>
+          <BrandIllo name="about-problem" />
         </div>
       </section>
 
@@ -333,12 +333,12 @@ function AboutPage({ onNavigate, ctaUrl }) {
 
       <section className="founder" data-screen-label="About / Founder" style={{ fontFamily: "Poppins" }}>
         <div className="founder__photo">
-          <image-slot id="about-founder" placeholder="Drop founder portrait here (Lamide Afolabi)" shape="rounded" radius="24"></image-slot>
+          <BrandIllo name="about-founder" />
         </div>
         <div>
-          <p className="eyebrow" style={{ fontFamily: "\"Afternoon in Stereo\"", textTransform: "none" }}>From the founder</p>
-          <p className="founder__quote" style={{ fontFamily: "Poppins" }}>
-            I built the thing I wished I'd had at 22 — a way to skip the ten bad fits and start with one that actually feels like the room I grew up in.
+          <p className="eyebrow" style={{ textTransform: "none", fontFamily: "Poppins" }}>FROM THE FOUNDER</p>
+          <p className="founder__quote" style={{ fontFamily: "Poppins" }}>I built the thing I wished I'd had at 22 — a way to skip the bad fits and start with one that actually feels safe.
+
           </p>
           <div className="founder__byline">
             <span className="founder__byline-avatar">
@@ -396,7 +396,7 @@ function MatchPage({ ctaUrl }) {
           </div>
         </div>
         <div className="match-hero__photo">
-          <image-slot id="match-hero" placeholder="Drop a candid, hopeful portrait here" shape="rounded" radius="24"></image-slot>
+          <BrandIllo name="match-hero" />
         </div>
       </section>
 
@@ -408,19 +408,19 @@ function MatchPage({ ctaUrl }) {
         <div className="expect__grid">
           <div className="expect__card">
             <img src="assets/icons/step2-survey.png" alt="" />
-            <span className="expect__card__num">01</span>
+            <span className="expect__card__num" style={{ fontFamily: "Poppins" }}>01</span>
             <h3>What's on your plate</h3>
             <p>Tell us your experiences, areas of concern, and what you want from a therapist.</p>
           </div>
           <div className="expect__card">
             <img src="assets/icons/step3-algorithm.png" alt="" />
-            <span className="expect__card__num">02</span>
+            <span className="expect__card__num" style={{ fontFamily: "Poppins" }}>02</span>
             <h3>We do the matching</h3>
             <p>Our system pairs you on identity, experience, and concern — not just availability.</p>
           </div>
           <div className="expect__card" data-comment-anchor="1ed86d7248-div-409-11">
             <img src="assets/icons/step4-match.png" alt="" />
-            <span className="expect__card__num">03</span>
+            <span className="expect__card__num" style={{ fontFamily: "Poppins" }}>03</span>
             <h3>Your shortlist arrives</h3>
             <p>You receive a shortlist of therapists who fit. Book directly. Switch any time.</p>
           </div>
