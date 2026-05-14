@@ -6,6 +6,9 @@
 const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
 const STRIPE_PAYMENT_URL = "https://buy.stripe.com/fZu4gA4t04Eh2DR4jz1Jm02";
 
+// Flip to false at submission 51 to re-enable Stripe redirect
+const FREE_TIER_ACTIVE = true;
+
 const { useState: useFormState } = React;
 
 const US_STATES = [
@@ -172,8 +175,12 @@ function FormPage({ onNavigate }) {
     // Fire to Make.com in background — no-cors avoids CORS preflight
     fetch(MAKE_WEBHOOK_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
 
-    // Redirect to Stripe with email pre-filled
-    window.location.href = STRIPE_PAYMENT_URL + "?prefilled_email=" + encodeURIComponent(data.email);
+    // Redirect to Stripe with email pre-filled (disabled during free tier)
+    if (FREE_TIER_ACTIVE) {
+      setSubmitted(true);
+    } else {
+      window.location.href = STRIPE_PAYMENT_URL + "?prefilled_email=" + encodeURIComponent(data.email);
+    }
   };
 
   if (submitted) {
@@ -375,7 +382,7 @@ function FormPage({ onNavigate }) {
         {/* Submit */}
         <div className="form-nav form-nav--single">
           <button type="submit" className="btn btn--primary btn--lg" disabled={submitting}>
-            {submitting ? "Taking you to payment…" : "Submit & pay $5"} <Icon name="arrow" size={16} />
+            {submitting ? "Submitting…" : FREE_TIER_ACTIVE ? "Submit my intake" : "Submit & pay $5"} <Icon name="arrow" size={16} />
           </button>
           {Object.keys(errors).length > 0 &&
             <p className="form-nav__hint">Some fields above need attention.</p>
