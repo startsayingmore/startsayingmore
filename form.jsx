@@ -169,7 +169,8 @@ function FormPage({ onNavigate }) {
       workedWell:        data.pastWorked,
       didntWork:         data.pastDidnt,
       additionalInfo:    data.notes,
-      wantsCall:         data.callRequested
+      wantsCall:         data.callRequested,
+      freeTier:          FREE_TIER_ACTIVE ? "true" : "false"
     });
 
     // Fire to Make.com in background — no-cors avoids CORS preflight
