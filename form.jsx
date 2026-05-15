@@ -3,8 +3,8 @@
 // All sections stacked, one submit at the bottom.
 // ============================================================
 
-const APPS_SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbw1XhOzogGEBCSWZZrE8DQ0s_GuZYOieF3UgncoVVZeHHctXTn8YWxMah8H8OXcdWwZzw/exec";
-const MAKE_WEBHOOK_URL  = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
+const APPS_SCRIPT_URL    = "https://script.google.com/macros/s/AKfycbw1XhOzogGEBCSWZZrE8DQ0s_GuZYOieF3UgncoVVZeHHctXTn8YWxMah8H8OXcdWwZzw/exec";
+const APPS_SCRIPT_TOKEN  = "ssm_mf_7x9k2p4q8n6r3w1";
 const STRIPE_PAYMENT_URL = "https://buy.stripe.com/fZu4gA4t04Eh2DR4jz1Jm02";
 
 // Flip to false at submission 51 to re-enable Stripe redirect (paid tier uses Make.com)
@@ -171,13 +171,18 @@ function FormPage({ onNavigate }) {
       didntWork:         data.pastDidnt,
       additionalInfo:    data.notes,
       wantsCall:         data.callRequested,
-      freeTier:          FREE_TIER_ACTIVE ? "true" : "false"
+      freeTier:          FREE_TIER_ACTIVE ? "true" : "false",
+      token:             APPS_SCRIPT_TOKEN
     });
 
     if (FREE_TIER_ACTIVE) {
       // Free tier: write directly to Google Sheets via Apps Script
-      fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
-      setSubmitted(true);
+      fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: payload })
+        .then(() => setSubmitted(true))
+        .catch(() => {
+          setSubmitting(false);
+          alert("Something went wrong submitting your form. Please try again or email info@startsayingmore.com.");
+        });
     } else {
       // Paid tier: store in Make.com data store, then redirect to Stripe
       fetch(MAKE_WEBHOOK_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
