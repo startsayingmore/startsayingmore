@@ -105,8 +105,6 @@ function Footer({ onNavigate, ctaUrl }) {
           <div className="site-footer__col">
             <h4>Contact</h4>
             <a href="mailto:info@startsayingmore.com">info@startsayingmore.com</a>
-            <a href="#">For therapists</a>
-            <a href="#">Press inquiries</a>
           </div>
           <div className="site-footer__col">
             <h4>Follow</h4>
