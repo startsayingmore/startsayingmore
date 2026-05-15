@@ -3,10 +3,11 @@
 // All sections stacked, one submit at the bottom.
 // ============================================================
 
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
+const APPS_SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbw1XhOzogGEBCSWZZrE8DQ0s_GuZYOieF3UgncoVVZeHHctXTn8YWxMah8H8OXcdWwZzw/exec";
+const MAKE_WEBHOOK_URL  = "https://hook.us2.make.com/2fktk3yqwk72g1oyxo4t527llfvr4mb6";
 const STRIPE_PAYMENT_URL = "https://buy.stripe.com/fZu4gA4t04Eh2DR4jz1Jm02";
 
-// Flip to false at submission 51 to re-enable Stripe redirect
+// Flip to false at submission 51 to re-enable Stripe redirect (paid tier uses Make.com)
 const FREE_TIER_ACTIVE = true;
 
 const { useState: useFormState } = React;
@@ -173,13 +174,13 @@ function FormPage({ onNavigate }) {
       freeTier:          FREE_TIER_ACTIVE ? "true" : "false"
     });
 
-    // Fire to Make.com in background — no-cors avoids CORS preflight
-    fetch(MAKE_WEBHOOK_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
-
-    // Redirect to Stripe with email pre-filled (disabled during free tier)
     if (FREE_TIER_ACTIVE) {
+      // Free tier: write directly to Google Sheets via Apps Script
+      fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
       setSubmitted(true);
     } else {
+      // Paid tier: store in Make.com data store, then redirect to Stripe
+      fetch(MAKE_WEBHOOK_URL, { method: "POST", mode: "no-cors", body: payload }).catch(() => {});
       window.location.href = STRIPE_PAYMENT_URL + "?prefilled_email=" + encodeURIComponent(data.email);
     }
   };
